@@ -13,22 +13,19 @@ export default async function handleMetrics(countrData: CountrApiResponse | null
   const pingMetric = metrics.find(metric => metric.name === pingMetricName) ?? await createInstatusMetric({ name: "Countr Ping", active: true, suffix: "ms" });
   const premiumPingMetric = countrPremiumData !== false && (metrics.find(metric => metric.name === premiumPingMetricName) || await createInstatusMetric({ name: "Countr Premium Ping", active: true, suffix: "ms" }));
 
-  const users = (countrData?.users ?? 0) + (countrPremiumData ? countrPremiumData.users : 0);
-  const guilds = (countrData?.guilds ?? 0) + (countrPremiumData ? countrPremiumData.guilds : 0);
-
   const timestamp = Date.now();
 
   for (const [metric, value] of [
-    [userMetric, users],
-    [guildMetric, guilds],
+    [userMetric, (countrData?.users ?? 0) + (countrPremiumData ? countrPremiumData.users : 0)],
+    [guildMetric, (countrData?.guilds ?? 0) + (countrPremiumData ? countrPremiumData.guilds : 0)],
     [pingMetric, getAveragePing(countrData?.shards ?? null)],
     [premiumPingMetric, getAveragePing(countrPremiumData ? countrPremiumData.shards : null)],
-  ] as Array<[InstatusMetric | false, number]>) {
-    if (metric) await addInstatusMetricDatapoint(metric.id, { timestamp, value });
+  ] as Array<[InstatusMetric | false, number | null]>) {
+    if (metric && value !== null) await addInstatusMetricDatapoint(metric.id, { timestamp, value });
   }
 }
 
-function getAveragePing(shards: CountrApiResponse["shards"] | null) {
-  if (!shards) return 0;
+function getAveragePing(shards: CountrApiResponse["shards"] | null): number | null {
+  if (!shards) return null;
   return Object.values(shards).reduce((a, b) => a + b.ping, 0) / Object.keys(shards).length;
 }
