@@ -50,7 +50,7 @@ jobs:
     name: Publish
     runs-on: ubuntu-latest
 
-    if: ${{ github.event.name != 'pull_request' }}
+    if: ${{ github.ref == 'refs/heads/main' }}
 
     steps:
     - name: Checkout repository
