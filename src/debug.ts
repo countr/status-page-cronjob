@@ -1,21 +1,20 @@
 import { getInstatusMetrics } from "./util/instatus/metrics";
-import { pingMetricName } from "./handlers/metrics";
 import { scheduleDelayMs } from "./schedule";
 
 export default async function sendDebugResponse(): Promise<Response> {
   const metrics = await getInstatusMetrics().catch(() => null);
   if (!metrics) return new Response("Failed to fetch instatus metrics", { status: 500 });
 
-  const pingMetric = metrics.find(metric => metric.name === pingMetricName);
-  if (!pingMetric) return new Response("Failed to find ping metric", { status: 500 });
-
-  const lastMetric = pingMetric.data.sort((a, b) => b.timestamp - a.timestamp).find(Boolean);
-  if (!lastMetric) return new Response("Failed to find ping metric last data timestamp", { status: 500 });
+  const lastMetricTimestamp = metrics
+    .reduce<number[]>((a, b) => [...a, ...b.data.map(datapoint => datapoint.timestamp)], [])
+    .sort((a, b) => b - a)
+    .find(Boolean);
+  if (!lastMetricTimestamp) return new Response("Failed to find last metric datapoint", { status: 500 });
 
   const now = Date.now();
-  const diff = now - lastMetric.timestamp;
+  const diff = now - lastMetricTimestamp;
 
-  if (diff > scheduleDelayMs + 15_000) return new Response(`Ping metric last data timestamp is ${diff}ms old (poor)`, { status: 500 });
+  if (diff > scheduleDelayMs + 15_000) return new Response(`Last metric datapoint is ${diff}ms old (poor)`, { status: 500 });
 
-  return new Response(`Ping metric last data timestamp is ${diff}ms old (healthy)`, { status: 200 });
+  return new Response(`Last metric datapoint is ${diff}ms old (healthy)`, { status: 200 });
 }
