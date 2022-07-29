@@ -18,7 +18,7 @@ export default async function handleMetrics(countrData: CountrApiResponse | null
   for (const [metric, value] of [
     [userMetric, (countrData?.users ?? 0) + (countrPremiumData ? countrPremiumData.users : 0)],
     [guildMetric, (countrData?.guilds ?? 0) + (countrPremiumData ? countrPremiumData.guilds : 0)],
-    [pingMetric, getAveragePing(countrData?.shards ?? null)],
+    [pingMetric, get95thPercentilePing(countrData?.shards ?? null)],
     [premiumPingMetric, getAveragePing(countrPremiumData ? countrPremiumData.shards : null)],
   ] as Array<[InstatusMetric | false, number | null]>) {
     if (metric && value !== null) await addInstatusMetricDatapoint(metric.id, { timestamp, value });
@@ -28,4 +28,13 @@ export default async function handleMetrics(countrData: CountrApiResponse | null
 function getAveragePing(shards: CountrApiResponse["shards"] | null): number | null {
   if (!shards) return null;
   return Object.values(shards).reduce((a, b) => a + b.ping, 0) / Object.keys(shards).length;
+}
+
+function get95thPercentilePing(shards: CountrApiResponse["shards"] | null): number | null {
+  if (!shards) return null;
+
+  const pings = Object.values(shards).map(shard => shard.ping);
+  pings.sort((a, b) => a - b);
+
+  return pings[Math.floor(pings.length * 0.95)] ?? null;
 }
