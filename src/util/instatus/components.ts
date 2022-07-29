@@ -18,5 +18,5 @@ export function updateInstatusComponent(componentId: string, component: Instatus
 }
 
 export function bulkUpdateInstatusComponents(components: InstatusComponentBulkUpdate[]): Promise<void> {
-  return fetchInstatusEndpoint("PUT", "/components", { updates: components }).then(obj => console.log((obj as { error: unknown }).error));
+  return fetchInstatusEndpoint("PUT", "/components", { updates: components }).then(() => void 0);
 }
