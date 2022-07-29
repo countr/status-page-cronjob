@@ -1,0 +1,22 @@
+name = "countr-status-page-cronjob"
+main = "./build/index.js"
+workers_dev = true
+compatibility_date = "2022-07-27"
+
+[build]
+command = "npm run build"
+
+[triggers]
+crons = ["*/2 * * * *"] # every 2 minutes
+
+[vars]
+# Sensitive data should be stored in the worker itself as an encrypted value... in other terms: NOT IN THIS FILE!
+# Method 1 is to use the `wrangler` command: `wrangler secret put <key>` where key is the environment variable name
+# Method 2 is to put them in through the workers dashboard
+#
+# Sensitive environment variables:
+# - COUNTR_API_ENDPOINT         - The endpoint for Countr's Manager API
+# - COUNTR_PREMIUM_API_ENDPOINT - The endpoint for Countr Premium's Manager API (optional)
+# - INSTATUS_API_KEY            - The Instatus user key
+
+INSTATUS_PAGE_ID = "cl65biobd12760uwok6x5h82w8" # The Instatus page ID
