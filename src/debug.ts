@@ -14,7 +14,7 @@ export default async function sendDebugResponse(): Promise<Response> {
   const now = Date.now();
   const diff = now - lastMetricTimestamp;
 
-  if (diff > scheduleDelayMs + 15_000) return new Response(`Last metric datapoint is ${diff}ms old (poor)`, { status: 500 });
+  if (diff > scheduleDelayMs + 300_000) return new Response(`Last metric datapoint is ${diff}ms old (poor)`, { status: 500 });
 
   return new Response(`Last metric datapoint is ${diff}ms old (healthy)`, { status: 200 });
 }
