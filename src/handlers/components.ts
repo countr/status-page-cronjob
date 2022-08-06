@@ -1,5 +1,5 @@
-import type { CountrApiResponse, CountrApiResponseData } from "../util/countr/types";
 import type { InstatusComponent, InstatusComponentBulkUpdate, InstatusComponentStatus, InstatusComponentUpdate } from "../util/instatus/types";
+import type { CountrApiResponse } from "../util/countr/types";
 import Status from "../util/countr/status";
 import { createInstatusComponent } from "../util/instatus/components";
 
@@ -36,10 +36,10 @@ export default async function handleComponents(countrData: CountrApiResponse | n
   }
 }
 
-function formUpdate(shard: CountrApiResponseData["shards"][string] | null, existingComponent: Partial<InstatusComponent> = {}): InstatusComponentUpdate | null {
+function formUpdate(shard: CountrApiResponse["shards"][string] | null, existingComponent: Partial<InstatusComponent> = {}): InstatusComponentUpdate | null {
   const update: InstatusComponentUpdate = {};
 
-  if (shard?.status === Status.Ready && !shard.loading) {
+  if (shard?.status === Status.Ready) {
     const description = `${shard.guilds} guilds, ${shard.users} users, ${shard.ping}ms ping`;
     if (existingComponent.description !== description) update.description = description;
     if (existingComponent.status !== "OPERATIONAL") update.status = "OPERATIONAL";

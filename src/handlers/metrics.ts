@@ -16,18 +16,23 @@ export default async function handleMetrics(countrData: CountrApiResponse | null
   const timestamp = Date.now();
 
   for (const [metric, value] of [
-    [userMetric, (countrData?.users ?? 0) + (countrPremiumData ? countrPremiumData.users : 0)],
-    [guildMetric, (countrData?.guilds ?? 0) + (countrPremiumData ? countrPremiumData.guilds : 0)],
+    [userMetric, getUserCount(countrData?.shards ?? null) + getUserCount(countrPremiumData ? countrPremiumData.shards : null)],
+    [guildMetric, getGuildCount(countrData?.shards ?? null) + getGuildCount(countrPremiumData ? countrPremiumData.shards : null)],
     [pingMetric, get95thPercentilePing(countrData?.shards ?? null)],
-    [premiumPingMetric, getAveragePing(countrPremiumData ? countrPremiumData.shards : null)],
+    [premiumPingMetric, get95thPercentilePing(countrPremiumData ? countrPremiumData.shards : null)],
   ] as Array<[InstatusMetric | false, number | null]>) {
     if (metric && value !== null) await addInstatusMetricDatapoint(metric.id, { timestamp, value });
   }
 }
 
-function getAveragePing(shards: CountrApiResponse["shards"] | null): number | null {
-  if (!shards) return null;
-  return Object.values(shards).reduce((a, b) => a + b.ping, 0) / Object.keys(shards).length;
+function getUserCount(shards: CountrApiResponse["shards"] | null): number {
+  if (!shards) return 0;
+  return Object.values(shards).reduce((a, b) => a + b.users, 0);
+}
+
+function getGuildCount(shards: CountrApiResponse["shards"] | null): number {
+  if (!shards) return 0;
+  return Object.values(shards).reduce((a, b) => a + b.guilds, 0);
 }
 
 function get95thPercentilePing(shards: CountrApiResponse["shards"] | null): number | null {
