@@ -6,6 +6,7 @@ export default function fetchInstatusEndpoint<ResponseData extends object>(metho
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
+    cf: { cacheTtl: 0 },
   })
     .then(res => res.json<ResponseData>());
 }

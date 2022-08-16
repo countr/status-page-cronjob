@@ -5,6 +5,7 @@ import handleComponents from "./handlers/components";
 import handleMetrics from "./handlers/metrics";
 
 export const scheduleDelayMs = 1000 * 60 * 2;
+export const outgoingRequestsPerSchedule = 40;
 
 export default async function runSchedule(): Promise<void> {
   const [countrStats, countrPremiumStats, instatusComponents, instatusMetrics] = await Promise.all([
@@ -26,6 +27,11 @@ export default async function runSchedule(): Promise<void> {
 
   if (!instatusComponents || !instatusMetrics) throw new Error("Failed to fetch instatus components or metrics");
 
-  await handleComponents(countrStats, instatusComponents);
-  await handleMetrics(countrStats, countrPremiumStats, instatusMetrics);
+  const requests = [
+    ...handleMetrics(countrStats, countrPremiumStats, instatusMetrics),
+    ...countrPremiumStats ? handleComponents(countrPremiumStats, instatusComponents, true) : [],
+    ...handleComponents(countrStats, instatusComponents),
+  ];
+
+  for (const request of requests.slice(0, outgoingRequestsPerSchedule)) await request();
 }

@@ -7,11 +7,15 @@ export const guildMetricName = "Countr Guilds";
 export const pingMetricName = "Countr Ping";
 export const premiumPingMetricName = "Countr Premium Ping";
 
-export default async function handleMetrics(countrData: CountrApiResponse | null, countrPremiumData: CountrApiResponse | false | null, metrics: InstatusMetric[]): Promise<void> {
-  const userMetric = metrics.find(metric => metric.name === userMetricName) ?? await createInstatusMetric({ name: "Countr Users", active: true, suffix: "" });
-  const guildMetric = metrics.find(metric => metric.name === guildMetricName) ?? await createInstatusMetric({ name: "Countr Guilds", active: true, suffix: "" });
-  const pingMetric = metrics.find(metric => metric.name === pingMetricName) ?? await createInstatusMetric({ name: "Countr Ping", active: true, suffix: "ms" });
-  const premiumPingMetric = countrPremiumData !== false && (metrics.find(metric => metric.name === premiumPingMetricName) || await createInstatusMetric({ name: "Countr Premium Ping", active: true, suffix: "ms" }));
+export default function handleMetrics(countrData: CountrApiResponse | null, countrPremiumData: CountrApiResponse | false | null, metrics: InstatusMetric[]): Array<() => Promise<void>> {
+  const updates: Array<() => Promise<void>> = [];
+
+  const userMetric = metrics.find(metric => metric.name === userMetricName) ?? void updates.push(() => createInstatusMetric({ name: "Countr Users", active: true, suffix: "" }).then(() => void 0));
+  const guildMetric = metrics.find(metric => metric.name === guildMetricName) ?? void updates.push(() => createInstatusMetric({ name: "Countr Guilds", active: true, suffix: "" }).then(() => void 0));
+  const pingMetric = metrics.find(metric => metric.name === pingMetricName) ?? void updates.push(() => createInstatusMetric({ name: "Countr Ping", active: true, suffix: "ms" }).then(() => void 0));
+  const premiumPingMetric = countrPremiumData !== false && (metrics.find(metric => metric.name === premiumPingMetricName) || void updates.push(() => createInstatusMetric({ name: "Countr Premium Ping", active: true, suffix: "ms" }).then(() => void 0)));
+
+  if (!userMetric || !guildMetric || !pingMetric || !premiumPingMetric && premiumPingMetric !== false) return updates;
 
   const timestamp = Date.now();
 
@@ -21,8 +25,10 @@ export default async function handleMetrics(countrData: CountrApiResponse | null
     [pingMetric, get95thPercentilePing(countrData?.shards ?? null)],
     [premiumPingMetric, get95thPercentilePing(countrPremiumData ? countrPremiumData.shards : null)],
   ] as Array<[InstatusMetric | false, number | null]>) {
-    if (metric && value !== null) await addInstatusMetricDatapoint(metric.id, { timestamp, value });
+    if (metric && value !== null) updates.push(() => addInstatusMetricDatapoint(metric.id, { timestamp, value }).then(() => void 0));
   }
+
+  return updates;
 }
 
 function getUserCount(shards: CountrApiResponse["shards"] | null): number {
