@@ -22,8 +22,8 @@ export default function handleMetrics(countrData: CountrApiResponse | null, coun
   for (const [metric, value] of [
     [userMetric, getUserCount(countrData?.shards ?? null) + getUserCount(countrPremiumData ? countrPremiumData.shards : null)],
     [guildMetric, getGuildCount(countrData?.shards ?? null) + getGuildCount(countrPremiumData ? countrPremiumData.shards : null)],
-    [pingMetric, get95thPercentilePing(countrData?.shards ?? null)],
-    [premiumPingMetric, get95thPercentilePing(countrPremiumData ? countrPremiumData.shards : null)],
+    [pingMetric, getAveragePing(countrData?.shards ?? null)],
+    [premiumPingMetric, getAveragePing(countrPremiumData ? countrPremiumData.shards : null)],
   ] as Array<[InstatusMetric | false, number | null]>) {
     if (metric && value !== null) updates.push(() => addInstatusMetricDatapoint(metric.id, { timestamp, value }).then(() => void 0));
   }
@@ -41,11 +41,9 @@ function getGuildCount(shards: CountrApiResponse["shards"] | null): number {
   return Object.values(shards).reduce((a, b) => a + b.guilds, 0);
 }
 
-function get95thPercentilePing(shards: CountrApiResponse["shards"] | null): number | null {
+function getAveragePing(shards: CountrApiResponse["shards"] | null): number | null {
   if (!shards) return null;
 
   const pings = Object.values(shards).map(shard => shard.ping);
-  pings.sort((a, b) => a - b);
-
-  return pings[Math.floor(pings.length * 0.95)] ?? null;
+  return pings.reduce((a, b) => a + b, 0) / pings.length;
 }
