@@ -7,7 +7,7 @@
     "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "3.14.1",
+    "@cloudflare/workers-types": "3.15.0",
     "@tsconfig/node16-strictest-esm": "1.0.3",
     "eslint": "8.23.0",
     "eslint-config-promise": "github:promise/eslint-config",
