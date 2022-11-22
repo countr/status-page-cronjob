@@ -12,7 +12,7 @@
     "eslint": "8.28.0",
     "eslint-config-promise": "github:promise/eslint-config",
     "typescript": "4.9.3",
-    "wrangler": "2.4.2"
+    "wrangler": "2.4.4"
   },
   "eslintConfig": {
     "extends": "promise"
