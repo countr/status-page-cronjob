@@ -1,8 +1,11 @@
 {
   "include": [ "./src" ],
-  "extends": "@tsconfig/node16-strictest-esm",
+  "extends": "@tsconfig/strictest",
   "compilerOptions": {
     "outDir": "./build",
-    "types": ["@cloudflare/workers-types"]
+    "target": "ESNext",
+    "module": "ESNext",
+    "lib": ["ESNext"],
+    "types": ["@cloudflare/workers-types/2022-11-30"],
   }
 }

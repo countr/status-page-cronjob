@@ -1,4 +1,4 @@
-import getCountrData from "./util/countr";
+import getCountrData from "./util/countr/index";
 import { getInstatusComponents } from "./util/instatus/components";
 import { getInstatusMetrics } from "./util/instatus/metrics";
 import handleComponents from "./handlers/components";
