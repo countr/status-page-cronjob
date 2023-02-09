@@ -2,8 +2,9 @@
   "name": "countr-status-page-cronjob",
   "scripts": {
     "build": "tsc",
+    "build:watch": "tsc -w",
     "deploy": "wrangler publish",
-    "lint": "eslint . --max-warnings=0",
+    "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
