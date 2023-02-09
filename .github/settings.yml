@@ -1,0 +1,18 @@
+_extends: biaw/.github
+
+repository:
+  name: status-page-cronjob
+  description: "A Cloudflare cronjob worker for the status page"
+  homepage: "https://countr.xyz"
+  private: false
+  topics: "cronjob, cf-workers, cloudflare-worker, cloudflare-workers, cf-worker, instatus-api, hacktoberfest"
+
+branches:
+  - name: main
+    protection:
+      required_status_checks:
+        checks:
+          - context: CodeQL
+          - context: ESLint
+          - context: DeepScan
+          - context: Test Build

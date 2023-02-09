@@ -1,6 +1,0 @@
-# GitHub
-
-repository:
-- "*"
-- ".github/*"
-- ".github/**/*"
