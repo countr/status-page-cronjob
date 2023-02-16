@@ -1,5 +1,5 @@
-import { getInstatusMetrics } from "./util/instatus/metrics";
 import { scheduleDelayMs } from "./schedule";
+import { getInstatusMetrics } from "./util/instatus/metrics";
 
 export default async function sendDebugResponse(): Promise<Response> {
   const metrics = await getInstatusMetrics().catch(() => null);
