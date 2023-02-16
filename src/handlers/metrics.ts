@@ -1,5 +1,5 @@
-import { addInstatusMetricDatapoint, createInstatusMetric } from "../util/instatus/metrics";
 import type { CountrApiResponse } from "../util/countr/types";
+import { addInstatusMetricDatapoint, createInstatusMetric } from "../util/instatus/metrics";
 import type { InstatusMetric } from "../util/instatus/types";
 
 export const userMetricName = "Countr Users";

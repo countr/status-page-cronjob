@@ -1,7 +1,7 @@
-import type { CountrApiResponse, CountrApiShardData } from "../util/countr/types";
-import type { InstatusComponent, InstatusComponentStatus, InstatusComponentUpdate } from "../util/instatus/types";
-import { createInstatusComponent, updateInstatusComponent } from "../util/instatus/components";
 import Status from "../util/countr/status";
+import type { CountrApiResponse, CountrApiShardData } from "../util/countr/types";
+import { createInstatusComponent, updateInstatusComponent } from "../util/instatus/components";
+import type { InstatusComponent, InstatusComponentStatus, InstatusComponentUpdate } from "../util/instatus/types";
 
 export default function handleComponents(countrData: CountrApiResponse | null, components: InstatusComponent[], premium = false): Array<() => Promise<void>> {
   const shards = countrData?.shards ?? {};

@@ -1,8 +1,8 @@
+import handleComponents from "./handlers/components";
+import handleMetrics from "./handlers/metrics";
 import getCountrData from "./util/countr/index";
 import { getInstatusComponents } from "./util/instatus/components";
 import { getInstatusMetrics } from "./util/instatus/metrics";
-import handleComponents from "./handlers/components";
-import handleMetrics from "./handlers/metrics";
 
 export const scheduleDelayMs = 1000 * 60 * 2;
 export const outgoingRequestsPerSchedule = 40;

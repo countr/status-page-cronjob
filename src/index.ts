@@ -1,5 +1,5 @@
-import runSchedule from "./schedule";
 import sendDebugResponse from "./debug";
+import runSchedule from "./schedule";
 
 // main cronjob
 addEventListener("scheduled", event => {

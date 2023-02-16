@@ -1,5 +1,5 @@
-import type { InstatusMetric, InstatusMetricDatapoint, InstatusMetricUpdate } from "./types";
 import fetchInstatusEndpoint from "./baseFetcher";
+import type { InstatusMetric, InstatusMetricDatapoint, InstatusMetricUpdate } from "./types";
 
 export function getInstatusMetrics(): Promise<InstatusMetric[]> {
   return fetchInstatusEndpoint("GET", "/metrics");

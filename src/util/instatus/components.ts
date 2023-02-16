@@ -1,5 +1,5 @@
-import type { InstatusComponent, InstatusComponentBulkUpdate, InstatusComponentUpdate } from "./types";
 import fetchInstatusEndpoint from "./baseFetcher";
+import type { InstatusComponent, InstatusComponentBulkUpdate, InstatusComponentUpdate } from "./types";
 
 export function getInstatusComponents(): Promise<InstatusComponent[]> {
   return fetchInstatusEndpoint("GET", "/components");
