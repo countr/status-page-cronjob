@@ -14,5 +14,5 @@ export function deleteInstatusMetric(metricId: string): Promise<void> {
 }
 
 export function addInstatusMetricDatapoint(metricId: string, datapoint: InstatusMetricDatapoint): Promise<void> {
-  return fetchInstatusEndpoint("POST", `/metrics/${metricId}/data`, { data: [datapoint]}).then(() => void 0);
+  return fetchInstatusEndpoint("POST", `/metrics/${metricId}/data`, { data: [datapoint] }).then(() => void 0);
 }
