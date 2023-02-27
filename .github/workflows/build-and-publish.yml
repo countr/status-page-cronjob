@@ -1,96 +1,72 @@
-name: Wrangler
+name: Build and publish
 
 on:
   push:
     branches:
-    - main
+      - main
   pull_request:
     branches:
-    - main
+      - main
   workflow_dispatch:
   repository_dispatch:
 
 jobs:
   build:
-    name: Test Build
+    name: Test build
     runs-on: ubuntu-latest
 
-    if: ${{ github.ref != 'refs/heads/main' }}
+    if: ${{ github.event_name == 'pull_request' }}
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
 
-    - name: Set up node
-      uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
-
     - name: Set up pnpm
       uses: pnpm/action-setup@v2
-      id: pnpm-install
       with:
         version: 7
-        run_install: false
 
-    - name: Get pnpm store directory
-      id: pnpm-cache
-      shell: bash
-      run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-    - name: Set up module cache
-      uses: actions/cache@69d9d449aced6a2ede0bc19182fadc3a0a42d2b0 # v3
-      id: cache-packages
+    - name: Set up node
+      uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
       with:
-        path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-        key: pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-        restore-keys: |
-          pnpm-store-
+        node-version-file: ".nvmrc"
+        cache: "pnpm"
 
     - name: Install dependencies
-      run: pnpm install
+      run: pnpm install --frozen-lockfile
 
-    - name: Build project
-      run: npm run build
+    - name: Test worker build
+      uses: cloudflare/wrangler-action@4c10c1822abba527d820b29e6333e7f5dac2cabd # tag=2.0.0
+      with:
+        apiToken: ${{ secrets.CF_API_TOKEN }}
+        accountId: ${{ secrets.CF_ACCOUNT_ID }}
+        publish: false
 
   publish:
     name: Publish
     runs-on: ubuntu-latest
 
-    if: ${{ github.ref == 'refs/heads/main' }}
+    if: ${{ github.event_name != 'pull_request' }}
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
 
-    - name: Set up node
-      uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
-
     - name: Set up pnpm
       uses: pnpm/action-setup@v2
-      id: pnpm-install
       with:
         version: 7
-        run_install: false
 
-#   - name: Get pnpm store directory
-#     id: pnpm-cache
-#     shell: bash
-#     run: |
-#         echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-#
-#   - name: Set up module cache
-#     uses: actions/cache@627f0f41f6904a5b1efbaed9f96d9eb58e92e920 # v3
-#     id: cache-packages
-#     with:
-#       path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-#       key: pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-#       restore-keys: |
-#         pnpm-store-
+    - name: Set up node
+      uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
+      with:
+        node-version-file: ".nvmrc"
+        cache: "pnpm"
 
     - name: Install dependencies
-      run: pnpm install
+      run: pnpm install --frozen-lockfile
 
-    - name: Build and Publish to Worker
+    - name: Publish to Worker
       uses: cloudflare/wrangler-action@4c10c1822abba527d820b29e6333e7f5dac2cabd # tag=2.0.0
       with:
         apiToken: ${{ secrets.CF_API_TOKEN }}
