@@ -6,15 +6,15 @@ specifiers:
   eslint: 8.35.0
   eslint-config-promise: github:promise/eslint-config
   typescript: 4.9.5
-  wrangler: 2.11.1
+  wrangler: 2.12.2
 
 devDependencies:
   '@cloudflare/workers-types': 4.20230307.0
   '@tsconfig/strictest': 1.0.2
   eslint: 8.35.0
-  eslint-config-promise: github.com/promise/eslint-config/11a8241a86c521bed62c0c4551bb30ca6962fc3d_kxxj7ovrjyqwqhfbjkojlpranq
+  eslint-config-promise: github.com/promise/eslint-config/fbeb489834f50030110ae6a25fa61733b0e69ac6_kxxj7ovrjyqwqhfbjkojlpranq
   typescript: 4.9.5
-  wrangler: 2.11.1
+  wrangler: 2.12.2
 
 packages:
 
@@ -2558,8 +2558,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /wrangler/2.11.1:
-    resolution: {integrity: sha512-WtFL3a5dGri74iQR2BE52DIt38Adgg5aPyXldEKU5OFzwRhYKq5LmGWuEI+fGrWpTjJ+WqAk9u6VAdQ1w9lPfw==}
+  /wrangler/2.12.2:
+    resolution: {integrity: sha512-pjdZvcjiFD6mI3Nncsw3hBv3rxjMx0n4Mtp+Tsql/hvr0LpOmHKlW/aMeYx/fVUmjEKfWBSULc1vgM02O2UTWQ==}
     engines: {node: '>=16.13.0'}
     hasBin: true
     dependencies:
@@ -2627,15 +2627,15 @@ packages:
       stack-trace: 0.0.10
     dev: true
 
-  github.com/promise/eslint-config/11a8241a86c521bed62c0c4551bb30ca6962fc3d_kxxj7ovrjyqwqhfbjkojlpranq:
-    resolution: {tarball: https://codeload.github.com/promise/eslint-config/tar.gz/11a8241a86c521bed62c0c4551bb30ca6962fc3d}
-    id: github.com/promise/eslint-config/11a8241a86c521bed62c0c4551bb30ca6962fc3d
+  github.com/promise/eslint-config/fbeb489834f50030110ae6a25fa61733b0e69ac6_kxxj7ovrjyqwqhfbjkojlpranq:
+    resolution: {tarball: https://codeload.github.com/promise/eslint-config/tar.gz/fbeb489834f50030110ae6a25fa61733b0e69ac6}
+    id: github.com/promise/eslint-config/fbeb489834f50030110ae6a25fa61733b0e69ac6
     name: eslint-config-promise
     version: 0.0.0
     peerDependencies:
       '@typescript-eslint/eslint-plugin': ^5.54.1
       '@typescript-eslint/parser': ^5.54.1
-      eslint: ^8.35.0
+      eslint: ^8.36.0
       eslint-import-resolver-typescript: ^3.5.3
       eslint-plugin-import: ^2.27.5
       eslint-plugin-jest: ^27.2.1
