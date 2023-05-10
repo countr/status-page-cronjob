@@ -6,7 +6,7 @@ export async function getInstatusComponents(): Promise<InstatusComponent[]> {
   let page = 1;
   let fetchedComponents: InstatusComponent[] = [];
   do {
-    fetchedComponents = await fetchInstatusEndpoint<InstatusComponent[]>("GET", `/components?page=${page}&per_page=100}`);
+    fetchedComponents = await fetchInstatusEndpoint<InstatusComponent[]>("GET", `/components?page=${page}&per_page=100`);
     components.push(...fetchedComponents);
     page += 1;
   } while (fetchedComponents.length === 100);
