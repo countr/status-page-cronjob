@@ -50,7 +50,7 @@ function getUpdates(shard: CountrApiShardData | null): [InstatusComponentStatus,
   const ping = Math.ceil(shard?.ping ?? 0);
 
   if (status === Status.Ready) {
-    if (ping < 125) return ["OPERATIONAL"];
+    if (ping < 150) return ["OPERATIONAL"];
     return ["DEGRADEDPERFORMANCE", `High ping of ${ping}ms`];
   }
   if (status === Status.Connecting) return ["PARTIALOUTAGE", "Connecting"];
