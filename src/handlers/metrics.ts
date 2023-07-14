@@ -13,7 +13,7 @@ export default function handleMetrics(countrData: CountrApiResponse | null, coun
   const userMetric = metrics.find(metric => metric.name === userMetricName) ?? void updates.push(() => createInstatusMetric({ name: "Countr Users", active: true, suffix: "" }).then(() => void 0));
   const guildMetric = metrics.find(metric => metric.name === guildMetricName) ?? void updates.push(() => createInstatusMetric({ name: "Countr Guilds", active: true, suffix: "" }).then(() => void 0));
   const pingMetric = metrics.find(metric => metric.name === pingMetricName) ?? void updates.push(() => createInstatusMetric({ name: "Countr Ping", active: true, suffix: "ms" }).then(() => void 0));
-  const premiumPingMetric = countrPremiumData !== false && (metrics.find(metric => metric.name === premiumPingMetricName) || void updates.push(() => createInstatusMetric({ name: "Countr Premium Ping", active: true, suffix: "ms" }).then(() => void 0)));
+  const premiumPingMetric = countrPremiumData !== false && (metrics.find(metric => metric.name === premiumPingMetricName) ?? void updates.push(() => createInstatusMetric({ name: "Countr Premium Ping", active: true, suffix: "ms" }).then(() => void 0)));
 
   if (!userMetric || !guildMetric || !pingMetric || !premiumPingMetric && premiumPingMetric !== false) return updates;
 
