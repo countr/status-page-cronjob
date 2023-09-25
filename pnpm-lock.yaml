@@ -6,8 +6,8 @@ settings:
 
 devDependencies:
   '@cloudflare/workers-types':
-    specifier: 4.20230914.0
-    version: 4.20230914.0
+    specifier: 4.20230922.0
+    version: 4.20230922.0
   '@tsconfig/strictest':
     specifier: 2.0.2
     version: 2.0.2
@@ -16,7 +16,7 @@ devDependencies:
     version: 8.50.0
   eslint-config-promise:
     specifier: github:promise/eslint-config
-    version: github.com/promise/eslint-config/e7816a8fbb0cc3c3d7cdda128ab8d615b269412e(@typescript-eslint/eslint-plugin@6.7.2)(@typescript-eslint/parser@6.7.2)(eslint-plugin-i@2.28.1)(eslint-plugin-jest@27.4.0)(eslint-plugin-react@7.33.2)(eslint-plugin-tailwindcss@3.13.0)(eslint@8.50.0)
+    version: github.com/promise/eslint-config/b69d2f92b6affc2f5893a6873a6b9fd9f06724c4(@typescript-eslint/eslint-plugin@6.7.2)(@typescript-eslint/parser@6.7.2)(eslint-plugin-i@2.28.1)(eslint-plugin-jest@27.4.0)(eslint-plugin-react@7.33.2)(eslint-plugin-tailwindcss@3.13.0)(eslint@8.50.0)
   typescript:
     specifier: 5.2.2
     version: 5.2.2
@@ -87,8 +87,8 @@ packages:
     dev: true
     optional: true
 
-  /@cloudflare/workers-types@4.20230914.0:
-    resolution: {integrity: sha512-OVeN4lFVu1O0PJGZ2d0FwpK8lelFcr33qYOgCh77ErEYmEBO4adwnIxcIsdQbFbhF0ffN6joiVcljD4zakdaeQ==}
+  /@cloudflare/workers-types@4.20230922.0:
+    resolution: {integrity: sha512-0N3fg4uv9pS7PXMVYmEmEGs1P1yzMIsqym0sO//o2IjtZhsf7RwOozJtdazDAL0fBIWsl1PRX7BmKe92RV+5qw==}
     dev: true
 
   /@esbuild-plugins/node-globals-polyfill@0.2.3(esbuild@0.17.19):
@@ -2791,9 +2791,9 @@ packages:
     resolution: {integrity: sha512-wvWkphh5WQsJbVk1tbx1l1Ly4yg+XecD+Mq280uBGt9wa5BKSWf4Mhp6GmrkPixhMxmabYY7RbzlwVP32pbGCg==}
     dev: true
 
-  github.com/promise/eslint-config/e7816a8fbb0cc3c3d7cdda128ab8d615b269412e(@typescript-eslint/eslint-plugin@6.7.2)(@typescript-eslint/parser@6.7.2)(eslint-plugin-i@2.28.1)(eslint-plugin-jest@27.4.0)(eslint-plugin-react@7.33.2)(eslint-plugin-tailwindcss@3.13.0)(eslint@8.50.0):
-    resolution: {tarball: https://codeload.github.com/promise/eslint-config/tar.gz/e7816a8fbb0cc3c3d7cdda128ab8d615b269412e}
-    id: github.com/promise/eslint-config/e7816a8fbb0cc3c3d7cdda128ab8d615b269412e
+  github.com/promise/eslint-config/b69d2f92b6affc2f5893a6873a6b9fd9f06724c4(@typescript-eslint/eslint-plugin@6.7.2)(@typescript-eslint/parser@6.7.2)(eslint-plugin-i@2.28.1)(eslint-plugin-jest@27.4.0)(eslint-plugin-react@7.33.2)(eslint-plugin-tailwindcss@3.13.0)(eslint@8.50.0):
+    resolution: {tarball: https://codeload.github.com/promise/eslint-config/tar.gz/b69d2f92b6affc2f5893a6873a6b9fd9f06724c4}
+    id: github.com/promise/eslint-config/b69d2f92b6affc2f5893a6873a6b9fd9f06724c4
     name: eslint-config-promise
     version: 0.0.0
     peerDependencies:
