@@ -39,4 +39,4 @@ jobs:
       with:
         apiToken: ${{ secrets.CF_API_TOKEN }}
         accountId: ${{ secrets.CF_ACCOUNT_ID }}
-        publish: ${{ github.ref == 'refs/heads/main' }}
+        command: ${{ github.ref == 'refs/heads/main' && 'deploy' || 'deploy --dry-run' }}
