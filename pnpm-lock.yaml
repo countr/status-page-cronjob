@@ -16,7 +16,7 @@ devDependencies:
     version: 8.56.0
   eslint-config-promise:
     specifier: github:promise/eslint-config
-    version: github.com/promise/eslint-config/61d7b5b5bf5ca2c5fedb508e7c743dae03e216ea(@stylistic/eslint-plugin-js@1.5.1)(@stylistic/eslint-plugin-jsx@1.5.1)(@stylistic/eslint-plugin-ts@1.5.1)(@typescript-eslint/eslint-plugin@6.16.0)(@typescript-eslint/parser@6.16.0)(eslint-plugin-i@2.29.1)(eslint-plugin-jest@27.6.0)(eslint-plugin-react@7.33.2)(eslint-plugin-tailwindcss@3.13.1)(eslint@8.56.0)
+    version: github.com/promise/eslint-config/8f8445b297b682af1d54502eef90e97b3a3299e5(@stylistic/eslint-plugin-js@1.5.1)(@stylistic/eslint-plugin-jsx@1.5.1)(@stylistic/eslint-plugin-ts@1.5.1)(@typescript-eslint/eslint-plugin@6.16.0)(@typescript-eslint/parser@6.16.0)(eslint-plugin-i@2.29.1)(eslint-plugin-jest@27.6.0)(eslint-plugin-react@7.33.2)(eslint-plugin-tailwindcss@3.13.1)(eslint@8.56.0)
   typescript:
     specifier: 5.3.3
     version: 5.3.3
@@ -3046,9 +3046,9 @@ packages:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
     dev: true
 
-  github.com/promise/eslint-config/61d7b5b5bf5ca2c5fedb508e7c743dae03e216ea(@stylistic/eslint-plugin-js@1.5.1)(@stylistic/eslint-plugin-jsx@1.5.1)(@stylistic/eslint-plugin-ts@1.5.1)(@typescript-eslint/eslint-plugin@6.16.0)(@typescript-eslint/parser@6.16.0)(eslint-plugin-i@2.29.1)(eslint-plugin-jest@27.6.0)(eslint-plugin-react@7.33.2)(eslint-plugin-tailwindcss@3.13.1)(eslint@8.56.0):
-    resolution: {tarball: https://codeload.github.com/promise/eslint-config/tar.gz/61d7b5b5bf5ca2c5fedb508e7c743dae03e216ea}
-    id: github.com/promise/eslint-config/61d7b5b5bf5ca2c5fedb508e7c743dae03e216ea
+  github.com/promise/eslint-config/8f8445b297b682af1d54502eef90e97b3a3299e5(@stylistic/eslint-plugin-js@1.5.1)(@stylistic/eslint-plugin-jsx@1.5.1)(@stylistic/eslint-plugin-ts@1.5.1)(@typescript-eslint/eslint-plugin@6.16.0)(@typescript-eslint/parser@6.16.0)(eslint-plugin-i@2.29.1)(eslint-plugin-jest@27.6.0)(eslint-plugin-react@7.33.2)(eslint-plugin-tailwindcss@3.13.1)(eslint@8.56.0):
+    resolution: {tarball: https://codeload.github.com/promise/eslint-config/tar.gz/8f8445b297b682af1d54502eef90e97b3a3299e5}
+    id: github.com/promise/eslint-config/8f8445b297b682af1d54502eef90e97b3a3299e5
     name: eslint-config-promise
     version: 0.0.0
     peerDependencies:
