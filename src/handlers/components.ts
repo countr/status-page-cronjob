@@ -25,9 +25,9 @@ export default function handleComponents(countrData: CountrApiResponse | null, c
       updates.push(() => createInstatusComponent({
         name: `${premium ? "Premium " : ""}Shard ${shardId}`,
         grouped: true,
-        group: premium ? "Countr Premium" : "Countr",
+        group: components.find(({ name }) => name === (premium ? "Countr Premium" : "Countr"))!.id,
         ...formUpdate(shard),
-      }).then(() => void 0));
+      }).then(() => void console.log(`Created component for ${premium ? "Countr Premium" : "Countr"} shard ${shardId}`)));
     }
   }
 
@@ -50,7 +50,7 @@ function getUpdates(shard: CountrApiShardData | null): [InstatusComponentStatus,
   const ping = Math.ceil(shard?.ping ?? 0);
 
   if (status === Status.Ready) {
-    if (ping < 300) return ["OPERATIONAL"];
+    if (ping < 500) return ["OPERATIONAL"];
     return ["DEGRADEDPERFORMANCE", `High ping of ${ping}ms`];
   }
   if (status === Status.Connecting) return ["PARTIALOUTAGE", "Connecting"];

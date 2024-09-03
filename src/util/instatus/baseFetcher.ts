@@ -1,5 +1,5 @@
-export default function fetchInstatusEndpoint<ResponseData extends object>(method: Request["method"], path: "" | `/${string}`, data?: object): Promise<ResponseData> {
-  return fetch(`https://api.instatus.com/v1/${INSTATUS_PAGE_ID}${path}`, {
+export default async function fetchInstatusEndpoint<ResponseData extends object>(method: Request["method"], path: "" | `/${string}`, data?: object): Promise<ResponseData> {
+  const response = await fetch(`https://api.instatus.com/v1/${INSTATUS_PAGE_ID}${path}`, {
     method,
     headers: {
       "Authorization": `Bearer ${INSTATUS_API_KEY}`,
@@ -8,5 +8,17 @@ export default function fetchInstatusEndpoint<ResponseData extends object>(metho
     body: JSON.stringify(data),
     cf: { cacheTtl: 0 },
   })
-    .then(res => res.json<ResponseData>());
+
+  if (response.status === 429) {
+    const retryAfter = response.headers.get("Retry-After");
+    if (retryAfter) {
+      console.log("Rate limited, retrying after", retryAfter);
+      await new Promise(resolve => setTimeout(resolve, Number(retryAfter) * 1000));
+      return fetchInstatusEndpoint(method, path, data);
+    }
+  }
+
+  console.log(method, path, "-", response.status);
+
+  return response.json();
 }
