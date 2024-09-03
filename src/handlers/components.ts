@@ -27,7 +27,8 @@ export default function handleComponents(countrData: CountrApiResponse | null, c
         grouped: true,
         group: components.find(({ name }) => name === (premium ? "Countr Premium" : "Countr"))!.id,
         ...formUpdate(shard),
-      }).then(() => void console.log(`Created component for ${premium ? "Countr Premium" : "Countr"} shard ${shardId}`)));
+      // eslint-disable-next-line no-console
+      }).then(() => console.log(`Created component for ${premium ? "Countr Premium" : "Countr"} shard ${shardId}`)));
     }
   }
 
