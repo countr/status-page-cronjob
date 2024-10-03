@@ -1,4 +1,4 @@
-IOimport Status from "../util/countr/status";
+import Status from "../util/countr/status";
 import type { CountrApiResponse, CountrApiShardData } from "../util/countr/types";
 import { createInstatusComponent, updateInstatusComponent } from "../util/instatus/components";
 import type { InstatusComponent, InstatusComponentStatus, InstatusComponentUpdate } from "../util/instatus/types";
