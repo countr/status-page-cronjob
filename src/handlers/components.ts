@@ -1,4 +1,4 @@
-import Status from "../util/countr/status";
+IOimport Status from "../util/countr/status";
 import type { CountrApiResponse, CountrApiShardData } from "../util/countr/types";
 import { createInstatusComponent, updateInstatusComponent } from "../util/instatus/components";
 import type { InstatusComponent, InstatusComponentStatus, InstatusComponentUpdate } from "../util/instatus/types";
@@ -56,13 +56,13 @@ function getUpdates(shard: CountrApiShardData | null): [InstatusComponentStatus,
     return ["DEGRADEDPERFORMANCE", `High ping of ${ping}ms`];
   }
   if (status === Status.Connecting) return ["PARTIALOUTAGE", "Connecting"];
-  if (status === Status.Reconnecting) return ["DEGRADEDPERFORMANCE", "Reconnecting"];
-  if (status === Status.Idle) return ["PARTIALOUTAGE", "Connection is idle"];
-  if (status === Status.Nearly) return ["DEGRADEDPERFORMANCE", "Connecting"];
+  if (status === Status.Reconnecting) return ["OPERATIONAL", "Reconnecting"];
+  if (status === Status.Idle) return ["OPERATIONAL", "Connection is idle"];
+  if (status === Status.Nearly) return ["OPERATIONAL", "Connecting"];
   if (status === Status.Disconnected) return ["MAJOROUTAGE", "Disconnected"];
   if (status === Status.WaitingForGuilds) return ["PARTIALOUTAGE", "Waiting for guilds"];
   if (status === Status.Identifying) return ["PARTIALOUTAGE", "Identifying"];
-  if (status === Status.Resuming) return ["DEGRADEDPERFORMANCE", "Resuming connection"];
+  if (status === Status.Resuming) return ["OPERATIONAL", "Resuming connection"];
   return ["UNDERMAINTENANCE", "Unknown status"];
 }
 /* eslint-enable @typescript-eslint/no-unnecessary-condition */
