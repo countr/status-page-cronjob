@@ -1,10 +1,10 @@
 export interface InstatusComponent {
+  description: string;
+  group: InstatusComponentGroup | null;
   id: string;
   name: string;
-  description: string;
-  status: InstatusComponentStatus;
   order: number;
-  group: InstatusComponentGroup | null;
+  status: InstatusComponentStatus;
 }
 
 export type InstatusComponentStatus =
@@ -16,26 +16,26 @@ export type InstatusComponentStatus =
   | "UNDERMAINTENANCE";
 
 export interface InstatusComponentGroup {
+  closed: boolean;
+  description: null | string;
   id: string;
   name: string;
-  description: string | null;
-  titled: string | null;
-  closed: boolean;
   order: number;
+  titled: null | string;
 }
 
-export type InstatusComponentUpdate = Partial<Omit<InstatusComponent, "group" | "id">> & { grouped?: boolean; group?: string };
+export type InstatusComponentUpdate = { group?: string; grouped?: boolean } & Partial<Omit<InstatusComponent, "group" | "id">>;
 
 export type InstatusComponentBulkUpdate = InstatusComponentUpdate & Pick<InstatusComponent, "id">;
 
 export interface InstatusMetric {
-  id: string;
-  name: string;
   active: boolean;
+  data: InstatusMetricDatapoint[];
+  id: string;
+  lastDataAt?: number;
+  name: string;
   order: number;
   suffix: string;
-  lastDataAt?: number;
-  data: InstatusMetricDatapoint[];
 }
 
 export interface InstatusMetricDatapoint {
