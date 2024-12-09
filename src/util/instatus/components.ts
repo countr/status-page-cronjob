@@ -1,9 +1,10 @@
-import fetchInstatusEndpoint from "./baseFetcher";
 import type { InstatusComponent, InstatusComponentBulkUpdate, InstatusComponentUpdate } from "./types";
+import fetchInstatusEndpoint from "./baseFetcher";
 
 export async function getInstatusComponents(): Promise<InstatusComponent[]> {
   const components: InstatusComponent[] = [];
   let page = 1;
+  // eslint-disable-next-line no-useless-assignment -- this isn't useless
   let fetchedComponents: InstatusComponent[] = [];
   do {
     fetchedComponents = await fetchInstatusEndpoint<InstatusComponent[]>("GET", `/components?page=${page}&per_page=100`);

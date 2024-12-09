@@ -1,22 +1,22 @@
 import type Status from "./status";
 
 export interface CountrApiResponse {
-  shards: Record<string, CountrApiShardData>;
   clusters: Record<string, CountrApiClusterData>;
+  shards: Record<string, CountrApiShardData>;
 }
 
 export interface CountrApiShardData {
   guilds: number;
-  users: number;
   ping: number;
-  status: Status;
   readyTimestamp: number;
+  status: Status;
   updateTimestamp: number;
+  users: number;
 }
 
 export interface CountrApiClusterData {
-  clusterShards: number[];
   clusterMemory: number;
-  startTimestamp: number;
+  clusterShards: number[];
   pingTimestamp: number;
+  startTimestamp: number;
 }

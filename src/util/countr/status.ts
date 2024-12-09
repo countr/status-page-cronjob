@@ -1,14 +1,14 @@
 // discord.js
 enum Status {
-  Ready = 0,
   Connecting = 1,
-  Reconnecting = 2,
+  Disconnected = 5,
+  Identifying = 7,
   Idle = 3,
   Nearly = 4,
-  Disconnected = 5,
-  WaitingForGuilds = 6,
-  Identifying = 7,
+  Ready = 0,
+  Reconnecting = 2,
   Resuming = 8,
+  WaitingForGuilds = 6,
 }
 
 export default Status;

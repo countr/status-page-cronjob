@@ -21,6 +21,7 @@ function testEnvironment(event?: FetchEvent) {
     INSTATUS_API_KEY;
     INSTATUS_PAGE_ID;
     /* eslint-enable @typescript-eslint/no-unused-expressions */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (err) {
     if (event) event.respondWith(new Response("Invalid environment variables", { status: 500 }));
     // eslint-disable-next-line no-console

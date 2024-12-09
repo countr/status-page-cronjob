@@ -1,12 +1,13 @@
 import type { CountrApiResponse } from "../util/countr/types";
-import { addInstatusMetricDatapoint, createInstatusMetric } from "../util/instatus/metrics";
 import type { InstatusMetric } from "../util/instatus/types";
+import { addInstatusMetricDatapoint, createInstatusMetric } from "../util/instatus/metrics";
 
 export const userMetricName = "Countr Users";
 export const guildMetricName = "Countr Guilds";
 export const pingMetricName = "Countr Ping";
 export const premiumPingMetricName = "Countr Premium Ping";
 
+// eslint-disable-next-line complexity
 export default function handleMetrics(countrData: CountrApiResponse | null, countrPremiumData: CountrApiResponse | false | null, metrics: InstatusMetric[]): Array<() => Promise<void>> {
   const updates: Array<() => Promise<void>> = [];
 
@@ -24,7 +25,7 @@ export default function handleMetrics(countrData: CountrApiResponse | null, coun
     [guildMetric, getGuildCount(countrData?.shards ?? null) + getGuildCount(countrPremiumData ? countrPremiumData.shards : null)],
     [pingMetric, getAveragePing(countrData?.shards ?? null)],
     [premiumPingMetric, getAveragePing(countrPremiumData ? countrPremiumData.shards : null)],
-  ] as Array<[InstatusMetric | false, number | null]>) {
+  ] as Array<[false | InstatusMetric, null | number]>) {
     if (metric && value !== null) updates.push(() => addInstatusMetricDatapoint(metric.id, { timestamp, value }).then(() => void 0));
   }
 
@@ -41,7 +42,7 @@ function getGuildCount(shards: CountrApiResponse["shards"] | null): number {
   return Object.values(shards).reduce((a, b) => a + b.guilds, 0);
 }
 
-function getAveragePing(shards: CountrApiResponse["shards"] | null): number | null {
+function getAveragePing(shards: CountrApiResponse["shards"] | null): null | number {
   if (!shards) return null;
 
   const pings = Object.values(shards).map(shard => shard.ping);
