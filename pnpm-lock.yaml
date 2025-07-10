@@ -24,8 +24,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       wrangler:
-        specifier: 4.24.2
-        version: 4.24.2(@cloudflare/workers-types@4.20250710.0)
+        specifier: 4.24.3
+        version: 4.24.3(@cloudflare/workers-types@4.20250710.0)
 
 packages:
 
@@ -1824,10 +1824,9 @@ packages:
     engines: {node: '>=16'}
     hasBin: true
 
-  wrangler@4.24.2:
-    resolution: {integrity: sha512-T1FKXUOlhDnVb1lna+xxr8ev7VbocISj4/ncNdPMwawjbH2OP5XxRXCf8lW45z1fqYDUCv0Ug7UU0pcdKt0hQg==}
+  wrangler@4.24.3:
+    resolution: {integrity: sha512-stB1Wfs5NKlspsAzz8SBujBKsDqT5lpCyrL+vSUMy3uueEtI1A5qyORbKoJhIguEbwHfWS39mBsxzm6Vm1J2cg==}
     engines: {node: '>=18.0.0'}
-    deprecated: '⚠️ Deprecated: 4.24.1 and 4.24.2 have a regression with redeploying a container. Please downgrade to 4.24.0 or upgrade to 4.24.3 when it is published.'
     hasBin: true
     peerDependencies:
       '@cloudflare/workers-types': ^4.20250709.0
@@ -3906,7 +3905,7 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20250709.0
       '@cloudflare/workerd-windows-64': 1.20250709.0
 
-  wrangler@4.24.2(@cloudflare/workers-types@4.20250710.0):
+  wrangler@4.24.3(@cloudflare/workers-types@4.20250710.0):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.4.0
       '@cloudflare/unenv-preset': 2.3.3(unenv@2.0.0-rc.17)(workerd@1.20250709.0)
