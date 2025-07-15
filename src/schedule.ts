@@ -4,7 +4,7 @@ import getCountrData from "./util/countr/index";
 import { getInstatusComponents } from "./util/instatus/components";
 import { getInstatusMetrics } from "./util/instatus/metrics";
 
-export const scheduleDelayMs = 1000 * 60 * 1;
+export const scheduleDelayMs = 1 * 60 * 1000;
 export const outgoingRequestsPerSchedule = 40;
 
 export default async function runSchedule(): Promise<void> {

@@ -20,10 +20,10 @@ export default function handleMetrics(
 
   // to balance out the load being pushed to Instatus, we only update the metrics if the last datapoint is older than 1 hour
   // it also only updates one of the metrics instead of both, which is intentional to reduce the load
-  if (userMetric && Math.max(...userMetric.data.map(datapoint => datapoint.timestamp)) > timestamp - 1000 * 60 * 60) {
+  if (userMetric && Math.max(...userMetric.data.map(datapoint => datapoint.timestamp)) > timestamp - 60 * 60 * 1000) {
     const value = getUserCount(countrData?.shards ?? null) + getUserCount(countrPremiumData ? countrPremiumData.shards : null);
     if (value > 0) updates.push(() => addInstatusMetricDatapoint(userMetric.id, { timestamp, value }).then(() => void 0));
-  } else if (guildMetric && Math.max(...guildMetric.data.map(datapoint => datapoint.timestamp)) > timestamp - 1000 * 60 * 60) {
+  } else if (guildMetric && Math.max(...guildMetric.data.map(datapoint => datapoint.timestamp)) > timestamp - 60 * 60 * 1000) {
     const value = getGuildCount(countrData?.shards ?? null) + getGuildCount(countrPremiumData ? countrPremiumData.shards : null);
     if (value > 0) updates.push(() => addInstatusMetricDatapoint(guildMetric.id, { timestamp, value }).then(() => void 0));
   }
@@ -42,7 +42,7 @@ export default function handleMetrics(
       // filter out those clusters that have a metric with a recent datapoint
       .filter(([cId]) => {
         const clusterMetric = metrics.find(metric => metric.name === `Ping for Cluster ${cId}`);
-        return clusterMetric && Math.max(...clusterMetric.data.map(datapoint => datapoint.timestamp)) < timestamp - 1000 * 4.25 * 60;
+        return clusterMetric && Math.max(...clusterMetric.data.map(datapoint => datapoint.timestamp)) < timestamp - 4.25 * 60 * 1000;
       })
       // the code below could be used to sort the clusters into ascending order by the last datapoint timestamp
       // however, the Instatus API does not guarantee live metrics data through their API, so we will instead
