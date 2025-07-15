@@ -5,16 +5,13 @@ export default async function sendDebugResponse(): Promise<Response> {
   const metrics = await getInstatusMetrics().catch(() => null);
   if (!metrics) return new Response("Failed to fetch instatus metrics", { status: 500 });
 
-  const lastMetricTimestamp = metrics
-    .reduce<number[]>((a, b) => [...a, ...b.data.map(datapoint => datapoint.timestamp)], [])
-    .sort((a, b) => b - a)
-    .find(Boolean);
-  if (!lastMetricTimestamp) return new Response("Failed to find last metric datapoint", { status: 500 });
+  const lastMetricTimestamp = Math.max(-1, ...metrics.flatMap(metric => metric.data.map(datapoint => datapoint.timestamp)));
+  if (lastMetricTimestamp === -1) return new Response("Failed to find last metric datapoint", { status: 500 });
 
   const now = Date.now();
   const diff = now - lastMetricTimestamp;
 
-  if (diff > scheduleDelayMs + 300_000) return new Response(`Last metric datapoint is ${diff}ms old (poor)`, { status: 500 });
+  if (diff > scheduleDelayMs + 600_000) return new Response(`Last metric datapoint is ${diff}ms old (poor)`, { status: 500 });
 
   return new Response(`Last metric datapoint is ${diff}ms old (healthy)`, { status: 200 });
 }

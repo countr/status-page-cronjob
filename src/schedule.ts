@@ -4,7 +4,7 @@ import getCountrData from "./util/countr/index";
 import { getInstatusComponents } from "./util/instatus/components";
 import { getInstatusMetrics } from "./util/instatus/metrics";
 
-export const scheduleDelayMs = 1000 * 60 * 2;
+export const scheduleDelayMs = 1000 * 60 * 1;
 export const outgoingRequestsPerSchedule = 40;
 
 export default async function runSchedule(): Promise<void> {
@@ -28,9 +28,9 @@ export default async function runSchedule(): Promise<void> {
   if (!instatusComponents || !instatusMetrics) throw new Error("Failed to fetch instatus components or metrics");
 
   const requests = [
-    ...handleMetrics(countrStats, countrPremiumStats, instatusMetrics),
     ...countrPremiumStats ? handleComponents(countrPremiumStats, instatusComponents, true) : [],
     ...handleComponents(countrStats, instatusComponents),
+    ...handleMetrics(countrStats, countrPremiumStats, instatusMetrics),
   ];
 
   for (const request of requests.slice(0, outgoingRequestsPerSchedule)) await request();

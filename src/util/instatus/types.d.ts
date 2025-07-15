@@ -10,7 +10,6 @@ export interface InstatusComponent {
 export type InstatusComponentStatus =
   | "DEGRADEDPERFORMANCE"
   | "MAJOROUTAGE"
-  | "MINOROUTAGE"
   | "OPERATIONAL"
   | "PARTIALOUTAGE"
   | "UNDERMAINTENANCE";
@@ -32,7 +31,6 @@ export interface InstatusMetric {
   active: boolean;
   data: InstatusMetricDatapoint[];
   id: string;
-  lastDataAt?: number;
   name: string;
   order: number;
   suffix: string;
