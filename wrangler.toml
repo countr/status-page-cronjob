@@ -12,6 +12,9 @@ crons = ["* * * * *"] # every minute
 [observability.logs]
 enabled = true
 
+[placement]
+mode = "smart"
+
 [vars]
 # Sensitive data should be stored in the worker itself as an encrypted value... in other terms: NOT IN THIS FILE!
 # Method 1 is to use the `wrangler` command: `wrangler secret put <key>` where key is the environment variable name
