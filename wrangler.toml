@@ -1,7 +1,7 @@
 name = "countr-status-page-cronjob"
 main = "./build/index.js"
 workers_dev = true
-compatibility_date = "2022-11-30"
+compatibility_date = "2025-05-05"
 
 [build]
 command = "npm run build"
