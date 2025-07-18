@@ -1,19 +1,12 @@
 import sendDebugResponse from "./debug";
 import runSchedule from "./schedule";
 
-// main cronjob
-addEventListener("scheduled", event => {
-  testEnvironment();
-  return event.waitUntil(runSchedule());
-});
+export default {
+  scheduled() { return testEnvironment() ?? runSchedule(); },
+  fetch() { return testEnvironment() ?? sendDebugResponse(); },
+} as ExportedHandler;
 
-// debug
-addEventListener("fetch", event => {
-  testEnvironment(event);
-  event.respondWith(sendDebugResponse());
-});
-
-function testEnvironment(event?: FetchEvent) {
+function testEnvironment(): null | Response {
   try {
     /* eslint-disable @typescript-eslint/no-unused-expressions */
     COUNTR_API_ENDPOINT;
@@ -23,8 +16,10 @@ function testEnvironment(event?: FetchEvent) {
     /* eslint-enable @typescript-eslint/no-unused-expressions */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (err) {
-    if (event) event.respondWith(new Response("Invalid environment variables", { status: 500 }));
     // eslint-disable-next-line no-console
-    return console.log("Invalid environment variables");
+    console.log("Invalid environment variables");
+    return new Response("Invalid environment variables", { status: 500 });
   }
+
+  return null;
 }
