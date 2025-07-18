@@ -1,9 +1,10 @@
+import type Env from "../environment";
 import type { CountrApiClusterData, CountrApiResponse } from "../util/countr/types";
 import type { InstatusComponent, InstatusComponentStatus, InstatusComponentUpdate } from "../util/instatus/types";
 import Status from "../util/countr/status";
 import { createInstatusComponent, updateInstatusComponent } from "../util/instatus/components";
 
-export default function handleComponents(countrData: CountrApiResponse | null, components: InstatusComponent[], premium = false): Array<() => Promise<void>> {
+export default function handleComponents(countrData: CountrApiResponse | null, components: InstatusComponent[], env: Env, premium = false): Array<() => Promise<void>> {
   const clusters = countrData?.clusters ?? {};
   const shards = countrData?.shards ?? {};
 
@@ -16,7 +17,7 @@ export default function handleComponents(countrData: CountrApiResponse | null, c
     const cluster = clusters[clusterId] ?? null;
 
     const update = formUpdate(cluster, shards, component);
-    if (update) updates.push(() => updateInstatusComponent(component.id, update).then(() => void 0));
+    if (update) updates.push(() => updateInstatusComponent(component.id, update, env).then(() => void 0));
   }
 
   // create or update cluster components
@@ -25,7 +26,7 @@ export default function handleComponents(countrData: CountrApiResponse | null, c
     const component = components.find(({ name }) => name === clusterName);
     if (component) {
       const update = formUpdate(cluster, shards, component);
-      if (update) updates.push(() => updateInstatusComponent(component.id, update).then(() => void 0));
+      if (update) updates.push(() => updateInstatusComponent(component.id, update, env).then(() => void 0));
     } else {
       // create new cluster component
       const groupName = premium ? "Countr Premium" : "Countr";
@@ -36,7 +37,7 @@ export default function handleComponents(countrData: CountrApiResponse | null, c
           grouped: true,
           group: group.id,
           ...formUpdate(cluster, shards),
-        }).then(() => void 0));
+        }, env).then(() => void 0));
       }
     }
   }

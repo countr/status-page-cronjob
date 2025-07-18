@@ -1,8 +1,10 @@
-export default async function fetchInstatusEndpoint<ResponseData extends object>(version: 1 | 2, method: Request["method"], path: "" | `/${string}`, data?: object): Promise<ResponseData> {
-  const response = await fetch(`https://api.instatus.com/v${version}/${INSTATUS_PAGE_ID}${path}`, {
+import type Env from "../../environment";
+
+export default async function fetchInstatusEndpoint<ResponseData extends object>(version: 1 | 2, method: Request["method"], path: "" | `/${string}`, env: Env, data?: object): Promise<ResponseData> {
+  const response = await fetch(`https://api.instatus.com/v${version}/${env.INSTATUS_PAGE_ID}${path}`, {
     method,
     headers: {
-      "Authorization": `Bearer ${INSTATUS_API_KEY}`,
+      "Authorization": `Bearer ${env.INSTATUS_API_KEY}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),

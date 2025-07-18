@@ -1,5 +1,6 @@
-declare const COUNTR_API_ENDPOINT: string;
-declare const COUNTR_PREMIUM_API_ENDPOINT: string | undefined;
-
-declare const INSTATUS_API_KEY: string;
-declare const INSTATUS_PAGE_ID: string;
+export default interface Env {
+  COUNTR_API_ENDPOINT: string;
+  COUNTR_PREMIUM_API_ENDPOINT: string | undefined;
+  INSTATUS_API_KEY: string;
+  INSTATUS_PAGE_ID: string;
+}

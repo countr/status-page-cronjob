@@ -1,3 +1,4 @@
+import type Env from "../environment";
 import type { CountrApiResponse, CountrApiShardData } from "../util/countr/types";
 import type { InstatusMetric } from "../util/instatus/types";
 import { addInstatusMetricDatapoint, createInstatusMetric } from "../util/instatus/metrics";
@@ -10,6 +11,7 @@ export default function handleMetrics(
   countrData: CountrApiResponse | null,
   countrPremiumData: CountrApiResponse | false | null,
   metrics: InstatusMetric[],
+  env: Env,
 ): Array<() => Promise<void>> {
   const updates: Array<() => Promise<void>> = [];
   const timestamp = Date.now();
@@ -22,16 +24,16 @@ export default function handleMetrics(
   // it also only updates one of the metrics instead of both, which is intentional to reduce the load
   if (userMetric && Math.max(...userMetric.data.map(datapoint => datapoint.timestamp)) > timestamp - 60 * 60 * 1000) {
     const value = getUserCount(countrData?.shards ?? null) + getUserCount(countrPremiumData ? countrPremiumData.shards : null);
-    if (value > 0) updates.push(() => addInstatusMetricDatapoint(userMetric.id, { timestamp, value }).then(() => void 0));
+    if (value > 0) updates.push(() => addInstatusMetricDatapoint(userMetric.id, { timestamp, value }, env).then(() => void 0));
   } else if (guildMetric && Math.max(...guildMetric.data.map(datapoint => datapoint.timestamp)) > timestamp - 60 * 60 * 1000) {
     const value = getGuildCount(countrData?.shards ?? null) + getGuildCount(countrPremiumData ? countrPremiumData.shards : null);
-    if (value > 0) updates.push(() => addInstatusMetricDatapoint(guildMetric.id, { timestamp, value }).then(() => void 0));
+    if (value > 0) updates.push(() => addInstatusMetricDatapoint(guildMetric.id, { timestamp, value }, env).then(() => void 0));
   }
 
   // premium metrics get updated first, so that they are always up-to-date
   if (countrPremiumData) {
     for (const [clusterId, cluster] of Object.entries(countrPremiumData.clusters)) {
-      const update = updateClusterMetrics(clusterId, cluster, countrPremiumData.shards, metrics, timestamp, true);
+      const update = updateClusterMetrics(clusterId, cluster, countrPremiumData.shards, metrics, timestamp, env, true);
       if (update) updates.push(update);
     }
   }
@@ -59,7 +61,7 @@ export default function handleMetrics(
       // limit to 3 clusters to avoid too many requests
       .slice(0, 3)
     ) {
-      const update = updateClusterMetrics(clusterId, cluster, countrData.shards, metrics, timestamp);
+      const update = updateClusterMetrics(clusterId, cluster, countrData.shards, metrics, timestamp, env);
       if (update) updates.push(update);
     }
   }
@@ -67,20 +69,20 @@ export default function handleMetrics(
   return updates;
 }
 
-function updateClusterMetrics(clusterId: string, cluster: CountrApiResponse["clusters"][string], shards: CountrApiResponse["shards"], metrics: InstatusMetric[], timestamp: number, premium = false): (() => Promise<void>) | null {
+function updateClusterMetrics(clusterId: string, cluster: CountrApiResponse["clusters"][string], shards: CountrApiResponse["shards"], metrics: InstatusMetric[], timestamp: number, env: Env, premium = false): (() => Promise<void>) | null {
   const metricName = `Ping for ${premium ? "Premium " : ""}Cluster ${clusterId}`;
   const pingMetric = metrics.find(metric => metric.name === metricName);
   const clusterShards = cluster.clusterShards.map(shard => shards[shard]).filter(Boolean) as CountrApiShardData[];
   const value = getAveragePing(clusterShards);
   if (pingMetric) {
-    if (value > 0) return () => addInstatusMetricDatapoint(pingMetric.id, { timestamp, value }).then(() => void 0);
+    if (value > 0) return () => addInstatusMetricDatapoint(pingMetric.id, { timestamp, value }, env).then(() => void 0);
   } else {
     return () => createInstatusMetric({
       active: true,
       name: metricName,
       suffix: "ms",
       ...value > 0 ? { data: [{ timestamp, value }] } : {},
-    }).then(() => void 0);
+    }, env).then(() => void 0);
   }
   return null;
 }
