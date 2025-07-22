@@ -73,7 +73,7 @@ function updateClusterMetrics(clusterId: string, cluster: CountrApiResponse["clu
   const metricName = `Ping for ${premium ? "Premium " : ""}Cluster ${clusterId}`;
   const pingMetric = metrics.find(metric => metric.name === metricName);
   const clusterShards = cluster.clusterShards.map(shard => shards[shard]).filter(Boolean) as CountrApiShardData[];
-  const value = getAveragePing(clusterShards);
+  const value = getPing(clusterShards);
   if (pingMetric) {
     if (value > 0) return () => addInstatusMetricDatapoint(pingMetric.id, { timestamp, value }, env).then(() => void 0);
   } else {
@@ -97,9 +97,9 @@ function getGuildCount(shards: CountrApiResponse["shards"] | null): number {
   return Object.values(shards).reduce((a, b) => a + b.guilds, 0);
 }
 
-function getAveragePing(shards: CountrApiShardData[]): number {
+function getPing(shards: CountrApiShardData[]): number {
   const pings = Object.values(shards)
     .map(shard => shard.ping)
     .filter(Boolean);
-  return Math.ceil(pings.reduce((a, b) => a + b, 0) / pings.length);
+  return Math.max(...pings);
 }
