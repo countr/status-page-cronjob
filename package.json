@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "4.20250922.0",
-    "@tsconfig/strictest": "2.0.5",
+    "@tsconfig/strictest": "2.0.6",
     "eslint": "9.36.0",
     "eslint-config-promise": "github:promise/eslint-config",
     "typescript": "5.9.2",
