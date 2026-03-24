@@ -12,7 +12,7 @@
     "@tsconfig/strictest": "2.0.8",
     "eslint": "9.39.4",
     "eslint-config-promise": "github:promise/eslint-config",
-    "typescript": "5.9.3",
+    "typescript": "6.0.2",
     "wrangler": "4.77.0"
   },
   "packageManager": "pnpm@10.33.0"
