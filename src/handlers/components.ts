@@ -7,6 +7,8 @@ import { createInstatusComponent, updateInstatusComponent } from "../util/instat
 export default function handleComponents(countrData: CountrApiResponse | null, components: InstatusComponent[], env: Env, premium = false): Array<() => Promise<void>> {
   const clusters = countrData?.clusters ?? {};
   const shards = countrData?.shards ?? {};
+  const componentsByName = new Map(components.map(component => [component.name, component]));
+  const allowComponentCreation = shouldAllowResourceCreation(env.INSTATUS_ALLOW_COMPONENT_CREATION);
 
   const updates: Array<() => Promise<void>> = [];
 
@@ -23,14 +25,14 @@ export default function handleComponents(countrData: CountrApiResponse | null, c
   // create or update cluster components
   for (const [clusterId, cluster] of Object.entries(clusters)) {
     const clusterName = `${premium ? "Premium " : ""}Cluster ${clusterId}`;
-    const component = components.find(({ name }) => name === clusterName);
+    const component = componentsByName.get(clusterName);
     if (component) {
       const update = formUpdate(cluster, shards, component);
       if (update) updates.push(() => updateInstatusComponent(component.id, update, env).then(() => void 0));
-    } else {
+    } else if (allowComponentCreation) {
       // create new cluster component
       const groupName = premium ? "Countr Premium" : "Countr";
-      const group = components.find(({ name }) => name === groupName);
+      const group = componentsByName.get(groupName);
       if (group) {
         updates.push(() => createInstatusComponent({
           name: clusterName,
@@ -43,6 +45,10 @@ export default function handleComponents(countrData: CountrApiResponse | null, c
   }
 
   return updates;
+}
+
+function shouldAllowResourceCreation(value: Env["INSTATUS_ALLOW_COMPONENT_CREATION"]): boolean {
+  return value === "1" || value === "true";
 }
 
 function formUpdate(cluster: CountrApiResponse["clusters"][string] | null, shards: CountrApiResponse["shards"], existingComponent: Partial<InstatusComponent> = {}): InstatusComponentUpdate | null {

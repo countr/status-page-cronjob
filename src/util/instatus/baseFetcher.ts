@@ -19,5 +19,12 @@ export default async function fetchInstatusEndpoint<ResponseData extends object>
   // eslint-disable-next-line no-console
   console.log(method, path, "-", response.status);
 
+  if (!response.ok) {
+    const message = await response.text();
+    throw new Error(`Instatus API request failed (${response.status}): ${message}`);
+  }
+
+  if (response.status === 204) return {} as ResponseData;
+
   return response.json();
 }

@@ -8,7 +8,7 @@ export async function getInstatusComponents(env: Env): Promise<InstatusComponent
   // eslint-disable-next-line no-useless-assignment -- this isn't useless
   let fetchedComponents: InstatusComponent[] = [];
   do {
-    fetchedComponents = await fetchInstatusEndpoint<InstatusComponent[]>(1, "GET", `/components?page=${page}&per_page=100`, env);
+    fetchedComponents = await fetchInstatusEndpoint<InstatusComponent[]>(2, "GET", `/components?page=${page}&per_page=100`, env);
     components.push(...fetchedComponents);
     page += 1;
   } while (fetchedComponents.length === 100);
@@ -24,9 +24,9 @@ export function deleteInstatusComponent(componentId: string, env: Env): Promise<
 }
 
 export function updateInstatusComponent(componentId: string, component: InstatusComponentUpdate, env: Env): Promise<InstatusComponent> {
-  return fetchInstatusEndpoint(1, "PUT", `/components/${componentId}`, env, component);
+  return fetchInstatusEndpoint(2, "PUT", `/components/${componentId}`, env, component);
 }
 
 export function bulkUpdateInstatusComponents(components: InstatusComponentBulkUpdate[], env: Env): Promise<void> {
-  return fetchInstatusEndpoint(1, "PUT", "/components", env, { updates: components }).then(() => void 0);
+  return fetchInstatusEndpoint(2, "PUT", "/components", env, { updates: components }).then(() => void 0);
 }

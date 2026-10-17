@@ -31,7 +31,7 @@ export interface InstatusMetric {
   active: boolean;
   data: InstatusMetricDatapoint[];
   id: string;
-  name: string;
+  name: { default: string } | string;
   order: number;
   suffix: string;
 }

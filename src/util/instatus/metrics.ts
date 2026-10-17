@@ -2,8 +2,18 @@ import type Env from "../../environment";
 import type { InstatusMetric, InstatusMetricDatapoint, InstatusMetricUpdate } from "./types";
 import fetchInstatusEndpoint from "./baseFetcher";
 
-export function getInstatusMetrics(env: Env): Promise<InstatusMetric[]> {
-  return fetchInstatusEndpoint(1, "GET", "/metrics", env);
+export async function getInstatusMetrics(env: Env): Promise<InstatusMetric[]> {
+  const metrics: InstatusMetric[] = [];
+  let page = 1;
+  // eslint-disable-next-line no-useless-assignment -- this variable is used in the loop condition
+  let fetchedMetrics: InstatusMetric[] = [];
+  do {
+    fetchedMetrics = await fetchInstatusEndpoint<InstatusMetric[]>(1, "GET", `/metrics?page=${page}&per_page=100`, env);
+    metrics.push(...fetchedMetrics);
+    page += 1;
+  } while (fetchedMetrics.length === 100);
+
+  return metrics;
 }
 
 export function createInstatusMetric(metric: InstatusMetricUpdate, env: Env): Promise<InstatusMetric> {
