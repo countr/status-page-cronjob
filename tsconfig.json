@@ -6,6 +6,6 @@
     "target": "ESNext",
     "module": "ESNext",
     "lib": ["ESNext"],
-    "types": ["./src/worker-configuration.d.ts"],
+    "types": ["./src/worker-configuration.d.ts", "node"],
   }
 }

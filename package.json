@@ -4,12 +4,13 @@
     "build": "tsc",
     "build:watch": "tsc -w",
     "deploy": "wrangler deploy",
-		"generate-types": "wrangler types ./src/worker-configuration.d.ts",
+    "generate-types": "wrangler types ./src/worker-configuration.d.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
     "@tsconfig/strictest": "2.0.8",
+    "@types/node": "26.6.5",
     "eslint": "9.39.5",
     "eslint-config-promise": "github:promise/eslint-config",
     "typescript": "5.9.3",
