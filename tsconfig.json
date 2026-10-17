@@ -2,6 +2,7 @@
   "include": [ "./src" ],
   "extends": "@tsconfig/strictest",
   "compilerOptions": {
+    "rootDir": "./src",
     "outDir": "./build",
     "target": "ESNext",
     "module": "ESNext",
