@@ -56,8 +56,11 @@ jobs:
     - name: Install dependencies
       run: pnpm install --frozen-lockfile
 
-    - name: Check if types are up-to-date
-      run: pnpm run generate-types --check
+    - name: Generate worker types
+      run: pnpm run generate-types
+
+    - name: Check if generated types are committed
+      run: git diff --exit-code -- src/worker-configuration.d.ts
 
     - name: Build
       run: pnpm run build
