@@ -6,6 +6,6 @@
     "target": "ESNext",
     "module": "ESNext",
     "lib": ["ESNext"],
-    "types": ["@cloudflare/workers-types/2023-07-01"],
+    "types": ["./src/worker-configuration.d.ts"],
   }
 }

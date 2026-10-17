@@ -1,7 +1,7 @@
 name = "countr-status-page-cronjob"
 main = "./build/index.js"
 workers_dev = true
-compatibility_date = "2025-05-05"
+compatibility_date = "2026-10-01"
 
 [build]
 command = "npm run build"
@@ -9,8 +9,21 @@ command = "npm run build"
 [triggers]
 crons = ["* * * * *"] # every minute
 
+[observability]
+enabled = false
+head_sampling_rate = 1
+redact_query_string = false
+
 [observability.logs]
 enabled = true
+head_sampling_rate = 1
+invocation_logs = true
+persist = true
+
+[observability.traces]
+enabled = true
+head_sampling_rate = 1
+persist = true
 
 [placement]
 mode = "smart"
