@@ -8,11 +8,11 @@ export interface InstatusComponent {
 }
 
 export type InstatusComponentStatus =
-  | "DEGRADEDPERFORMANCE"
-  | "MAJOROUTAGE"
-  | "OPERATIONAL"
-  | "PARTIALOUTAGE"
-  | "UNDERMAINTENANCE";
+  | "DEGRADEDPERFORMANCE" |
+  "MAJOROUTAGE" |
+  "OPERATIONAL" |
+  "PARTIALOUTAGE" |
+  "UNDERMAINTENANCE";
 
 export interface InstatusComponentGroup {
   closed: boolean;
