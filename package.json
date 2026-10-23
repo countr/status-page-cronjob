@@ -10,7 +10,6 @@
   },
   "devDependencies": {
     "@tsconfig/strictest": "2.0.8",
-    "@types/node": "26.6.5",
     "eslint": "9.39.5",
     "eslint-config-promise": "github:promise/eslint-config",
     "typescript": "5.9.3",

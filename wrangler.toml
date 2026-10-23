@@ -2,6 +2,7 @@ name = "countr-status-page-cronjob"
 main = "./build/index.js"
 workers_dev = true
 compatibility_date = "2026-10-01"
+compatibility_flags = ["no_nodejs_compat", "no_nodejs_compat_v2"] # we do not need Node.js compatibility
 
 [build]
 command = "npm run build"
