@@ -46,5 +46,18 @@
     // - INSTATUS_ALLOW_COMPONENT_CREATION  - Optional, set to true or 1 to allow creating missing Instatus components
     // - INSTATUS_ALLOW_METRIC_CREATION     - Optional, set to true or 1 to allow creating missing Instatus metrics
     "INSTATUS_PAGE_ID": "cl65biobd12760uwok6x5h82w8" // The Instatus page ID
-  }
+  },
+
+  "vpc_services": [
+    { // Countr stats
+      "binding": "VPC_SERVICE",
+      "service_id": "01a1786d-6f06-7283-a0e9-c46cf2802d22",
+      "remote": true
+    },
+    { // Countr premium stats
+      "binding": "VPC_SERVICE",
+      "service_id": "01a1786d-deae-7093-9597-e402927bf8d7",
+      "remote": true
+    }
+  ]
 }
