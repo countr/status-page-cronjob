@@ -1,4 +1,5 @@
 {
+  "$schema": "node_modules/wrangler/config-schema.json",
   "name": "countr-status-page-cronjob",
   "main": "./build/index.js",
   "workers_dev": true,
@@ -53,12 +54,12 @@
 
   "vpc_services": [
     { // Countr stats
-      "binding": "VPC_SERVICE",
+      "binding": "COUNTR_VPC_SERVICE",
       "service_id": "01a1786d-6f06-7283-a0e9-c46cf2802d22",
       "remote": true
     },
     { // Countr premium stats
-      "binding": "VPC_SERVICE",
+      "binding": "COUNTR_PREMIUM_VPC_SERVICE",
       "service_id": "01a1786d-deae-7093-9597-e402927bf8d7",
       "remote": true
     }

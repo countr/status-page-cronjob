@@ -1,4 +1,4 @@
-export default interface Env {
+export default interface Env extends Cloudflare.Env {
   COUNTR_API_ENDPOINT: string;
   COUNTR_PREMIUM_API_ENDPOINT: string | undefined;
   INSTATUS_ALLOW_COMPONENT_CREATION?: string;
