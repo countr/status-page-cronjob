@@ -9,7 +9,7 @@
     "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
-    "@tsconfig/strictest": "2.0.8",
+    "@tsconfig/strictest": "2.0.9",
     "eslint": "10.14.0",
     "eslint-config-promise": "github:promise/eslint-config",
     "typescript": "5.9.3",
