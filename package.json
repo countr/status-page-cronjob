@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@tsconfig/strictest": "2.0.9",
-    "eslint": "10.14.0",
+    "eslint": "10.15.0",
     "eslint-config-promise": "github:promise/eslint-config",
     "typescript": "5.9.3",
     "wrangler": "4.161.0"
